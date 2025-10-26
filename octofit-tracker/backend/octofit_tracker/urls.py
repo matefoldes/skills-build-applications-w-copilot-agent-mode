@@ -19,6 +19,7 @@ from rest_framework import routers
 from .views import TeamViewSet, OctofitUserViewSet, ActivityViewSet, LeaderboardViewSet, WorkoutViewSet
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+import os
 
 router = routers.DefaultRouter()
 router.register(r'teams', TeamViewSet)
@@ -31,12 +32,25 @@ router.register(r'workouts', WorkoutViewSet)
 @api_view(['GET'])
 def api_root(request, format=None):
     """Named API root for the project (used by tests and discoverability)."""
+    # Prefer constructing URLs from the Codespace hostname when available so
+    # external tools (like the Codespaces forwarded URL) get reachable links
+    # without hard-coding the Codespace name. Fall back to the request host.
+    codespace = os.environ.get('CODESPACE_NAME')
+    if codespace:
+        base = f"https://{codespace}-8000.app.github.dev"
+    else:
+        # Fallback to the request host/scheme
+        base = request.build_absolute_uri('/')[:-1]  # remove trailing slash
+
+    def api(path):
+        return f"{base}/api/{path}/"
+
     return Response({
-        'teams': request.build_absolute_uri('/api/teams/'),
-        'users': request.build_absolute_uri('/api/users/'),
-        'activities': request.build_absolute_uri('/api/activities/'),
-        'leaderboard': request.build_absolute_uri('/api/leaderboard/'),
-        'workouts': request.build_absolute_uri('/api/workouts/'),
+        'teams': api('teams'),
+        'users': api('users'),
+        'activities': api('activities'),
+        'leaderboard': api('leaderboard'),
+        'workouts': api('workouts'),
     })
 
 
