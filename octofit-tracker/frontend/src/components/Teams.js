@@ -1,0 +1,28 @@
+import React, { useEffect, useState } from 'react';
+
+const resource = 'teams';
+
+export default function Teams() {
+  const [data, setData] = useState([]);
+  const baseUrl = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api`;
+  const endpoint = `${baseUrl}/${resource}/`;
+
+  useEffect(() => {
+    console.log('[Teams] endpoint ->', endpoint);
+    fetch(endpoint)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log('[Teams] fetched ->', json);
+        const payload = Array.isArray(json) ? json : json.results ?? json;
+        setData(payload);
+      })
+      .catch((err) => console.error('[Teams] fetch error', err));
+  }, [endpoint]);
+
+  return (
+    <div className="container mt-4">
+      <h2>Teams</h2>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
+}
