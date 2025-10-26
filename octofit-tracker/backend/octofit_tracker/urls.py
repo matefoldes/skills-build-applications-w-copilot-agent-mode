@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from .views import TeamViewSet, OctofitUserViewSet, ActivityViewSet, LeaderboardViewSet, WorkoutViewSet
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 router = routers.DefaultRouter()
 router.register(r'teams', TeamViewSet)
@@ -25,7 +27,22 @@ router.register(r'activities', ActivityViewSet)
 router.register(r'leaderboard', LeaderboardViewSet)
 router.register(r'workouts', WorkoutViewSet)
 
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    """Named API root for the project (used by tests and discoverability)."""
+    return Response({
+        'teams': request.build_absolute_uri('/api/teams/'),
+        'users': request.build_absolute_uri('/api/users/'),
+        'activities': request.build_absolute_uri('/api/activities/'),
+        'leaderboard': request.build_absolute_uri('/api/leaderboard/'),
+        'workouts': request.build_absolute_uri('/api/workouts/'),
+    })
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    # API root view at '/'
+    path('', api_root),
 ]
