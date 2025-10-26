@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-const resource = 'teams';
-
 function renderTable(data) {
   if (!Array.isArray(data) || data.length === 0) return <div className="p-3">No teams</div>;
   const headers = Object.keys(data[0]);
@@ -25,10 +23,9 @@ function renderTable(data) {
 
 export default function Teams() {
   const [data, setData] = useState([]);
-  const baseUrl = process.env.REACT_APP_CODESPACE_NAME
-    ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api`
-    : `http://localhost:8000/api`;
-  const endpoint = `${baseUrl}/${resource}/`;
+  const endpoint = process.env.REACT_APP_CODESPACE_NAME
+    ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/teams`
+    : `http://localhost:8000/api/teams/`;
 
   const fetchData = () => {
     console.log('[Teams] endpoint ->', endpoint);

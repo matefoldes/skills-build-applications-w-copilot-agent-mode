@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-const resource = 'activities';
-
 function renderTable(data) {
   if (!Array.isArray(data) || data.length === 0) {
     return <div className="p-3">No data available</div>;
@@ -35,10 +33,9 @@ function renderTable(data) {
 
 export default function Activities() {
   const [data, setData] = useState([]);
-  const baseUrl = process.env.REACT_APP_CODESPACE_NAME
-    ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api`
-    : `http://localhost:8000/api`;
-  const endpoint = `${baseUrl}/${resource}/`;
+  const endpoint = process.env.REACT_APP_CODESPACE_NAME
+    ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/activities`
+    : `http://localhost:8000/api/activities`;
 
   const fetchData = () => {
     console.log('[Activities] endpoint ->', endpoint);
