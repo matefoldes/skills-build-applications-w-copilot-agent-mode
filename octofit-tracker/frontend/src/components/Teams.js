@@ -25,7 +25,9 @@ function renderTable(data) {
 
 export default function Teams() {
   const [data, setData] = useState([]);
-  const baseUrl = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api`;
+  const baseUrl = process.env.REACT_APP_CODESPACE_NAME
+    ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api`
+    : `http://localhost:8000/api`;
   const endpoint = `${baseUrl}/${resource}/`;
 
   const fetchData = () => {
@@ -33,6 +35,7 @@ export default function Teams() {
     fetch(endpoint)
       .then((res) => res.json())
       .then((json) => {
+        console.log('[Teams] fetched ->', json);
         const payload = Array.isArray(json) ? json : json.results ?? json;
         setData(payload);
       })

@@ -8,7 +8,7 @@ import App from './App';
 const codespaceName = process.env.REACT_APP_CODESPACE_NAME;
 const baseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev/api`
-  : undefined;
+  : `http://localhost:8000/api`;
 console.log('[index] REACT_APP_CODESPACE_NAME ->', codespaceName);
 console.log('[index] API baseUrl ->', baseUrl);
 
