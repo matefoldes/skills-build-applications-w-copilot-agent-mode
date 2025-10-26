@@ -2,27 +2,56 @@ import React, { useEffect, useState } from 'react';
 
 const resource = 'leaderboard';
 
+function renderTable(data) {
+  if (!Array.isArray(data) || data.length === 0) return <div className="p-3">No leaderboard data</div>;
+  const headers = Object.keys(data[0]);
+  return (
+    <div className="table-responsive">
+      <table className="table table-striped table-hover data-table mb-0">
+        <thead>
+          <tr>{headers.map((h) => <th key={h}>{h}</th>)}</tr>
+        </thead>
+        <tbody>
+          {data.map((row, i) => (
+            <tr key={i}>
+              {headers.map((h) => <td key={h}>{typeof row[h] === 'object' ? JSON.stringify(row[h]) : String(row[h])}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function Leaderboard() {
   const [data, setData] = useState([]);
   const baseUrl = `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api`;
   const endpoint = `${baseUrl}/${resource}/`;
 
-  useEffect(() => {
+  const fetchData = () => {
     console.log('[Leaderboard] endpoint ->', endpoint);
     fetch(endpoint)
       .then((res) => res.json())
       .then((json) => {
-        console.log('[Leaderboard] fetched ->', json);
         const payload = Array.isArray(json) ? json : json.results ?? json;
         setData(payload);
       })
       .catch((err) => console.error('[Leaderboard] fetch error', err));
-  }, [endpoint]);
+  };
+
+  useEffect(() => { fetchData(); }, [endpoint]);
 
   return (
     <div className="container mt-4">
-      <h2>Leaderboard</h2>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <div className="card table-card">
+        <div className="card-body">
+          <div className="d-flex align-items-center justify-content-between mb-3">
+            <h2 className="h5 mb-0">Leaderboard</h2>
+            <button className="btn btn-outline-primary btn-sm" onClick={fetchData}>Refresh</button>
+          </div>
+          {renderTable(data)}
+        </div>
+      </div>
     </div>
   );
 }

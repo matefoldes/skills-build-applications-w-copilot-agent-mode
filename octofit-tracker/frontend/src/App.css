@@ -1,0 +1,42 @@
+/* Minimal app stylesheet to complement Bootstrap */
+body {
+  background-color: #f8f9fa;
+}
+
+.app-container {
+  padding-bottom: 3rem;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.page-card {
+  margin-top: 1.5rem;
+}
+
+.table-card .card-body {
+  padding: 0.5rem;
+}
+
+.data-table {
+  margin-bottom: 0;
+}
+
+.json-preview {
+  max-height: 300px;
+  overflow: auto;
+  background: #fff;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+.refresh-btn {
+  margin-left: 0.5rem;
+}
+
+.card-title h2 {
+  margin: 0;
+}

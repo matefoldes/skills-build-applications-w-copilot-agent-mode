@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+import './App.css';
 import Activities from './components/Activities';
 import Leaderboard from './components/Leaderboard';
 import Teams from './components/Teams';
@@ -8,9 +9,13 @@ import Workouts from './components/Workouts';
 
 function Home() {
   return (
-    <div className="container mt-5">
-      <h1>OctoFit Tracker</h1>
-      <p>Welcome to OctoFit!</p>
+    <div className="container app-container mt-5">
+      <div className="card page-card">
+        <div className="card-body">
+          <h1 className="card-title">OctoFit Tracker</h1>
+          <p className="card-text">Welcome to OctoFit! Browse activities, workouts, teams, users and the leaderboard.</p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -21,7 +26,10 @@ export default function App() {
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
           <Link className="navbar-brand" to="/">OctoFit</Link>
-          <div className="collapse navbar-collapse">
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="mainNav">
             <ul className="navbar-nav me-auto">
               <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
               <li className="nav-item"><Link className="nav-link" to="/activities">Activities</Link></li>
