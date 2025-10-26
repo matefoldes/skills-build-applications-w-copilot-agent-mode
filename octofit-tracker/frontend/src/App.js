@@ -25,7 +25,10 @@ export default function App() {
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
-          <Link className="navbar-brand" to="/">OctoFit</Link>
+          <Link className="navbar-brand" to="/">
+            <img src="/octofitapp-small.svg" alt="OctoFit" className="brand-logo" />
+            <span>OctoFit</span>
+          </Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
